@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import headerImg from '../../assets/meals.jpg'
+import HeaderCartButton from './HeaderCartButton'
 
 const Header = () => {
   return (
     <>
       <Hdr>
         <h1>Order your meals</h1>
-        <button>Cart</button>
+        <HeaderCartButton>Cart</HeaderCartButton>
       </Hdr>
       <MainImage>
         <img src={headerImg} alt="A table full of food" />
@@ -40,6 +41,6 @@ const MainImage = styled.div`
     width: 110%;
     height: 100%;
     object-fit: cover;
-    transform: rotateZ(-5deg) translateY(-4rem) translateX(-1rem);
+    transform: rotateZ(-5deg) translateY(-7rem) translateX(-1rem);
   }
 `
