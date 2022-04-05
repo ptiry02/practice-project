@@ -1,8 +1,15 @@
-import styled from 'styled-components'
 import Header from './components/Layout/Header'
+import Meals from './components/Meals/Meals'
 
 const App = () => {
-  return <Header />
+  return (
+    <>
+      <Header />
+      <main>
+        <Meals />
+      </main>
+    </>
+  )
 }
 
 export default App
