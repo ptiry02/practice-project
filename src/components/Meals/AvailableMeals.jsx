@@ -1,15 +1,24 @@
 import { DUMMY_MEALS } from '../../helpers/constants'
 import styled from 'styled-components'
+import Card from '../UI/Card'
+import MealItem from './MealItem/MealItem'
 import '../../assets/animations/animations.module.css'
 
 const AvailableMeals = () => {
   return (
     <Meals>
-      <ul>
-        {DUMMY_MEALS.map((meal) => (
-          <li key={meal.id}>{meal.name}</li>
-        ))}
-      </ul>
+      <Card>
+        <ul>
+          {DUMMY_MEALS.map((meal) => (
+            <MealItem
+              key={meal.id}
+              title={meal.name}
+              description={meal.description}
+              price={meal.price}
+            />
+          ))}
+        </ul>
+      </Card>
     </Meals>
   )
 }
