@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import MealItemForm from './MealItemForm'
 
-const MealItem = ({ title, description, price }) => {
+const MealItem = ({ title, description, price, id }) => {
   const priceAmount = `${price.toFixed(2)}€`
 
   return (
@@ -12,7 +12,7 @@ const MealItem = ({ title, description, price }) => {
         <Price>{priceAmount}</Price>
       </div>
       <div>
-        <MealItemForm />
+        <MealItemForm id={id} />
       </div>
     </Meal>
   )

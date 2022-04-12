@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 import Input from '../../UI/Input'
 
-const MealItemForm = (props) => {
+const MealItemForm = ({ id }) => {
   return (
     <Form>
       <Input
         label="Amount"
         input={{
-          id: 'amount',
+          id: 'amount_' + id,
           type: 'number',
           min: 1,
           max: 5,
