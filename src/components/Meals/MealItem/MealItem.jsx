@@ -1,25 +1,28 @@
 import styled from 'styled-components'
+import MealItemForm from './MealItemForm'
 
 const MealItem = ({ title, description, price }) => {
   const priceAmount = `${price.toFixed(2)}€`
 
   return (
-    <li>
-      <Meal>
+    <Meal>
+      <div>
         <h3>{title}</h3>
         <Description>{description}</Description>
         <Price>{priceAmount}</Price>
-      </Meal>
-      <div></div>
-    </li>
+      </div>
+      <div>
+        <MealItemForm />
+      </div>
+    </Meal>
   )
 }
 
 export default MealItem
 
-const Meal = styled.div`
+const Meal = styled.li`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   margin: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #ccc;
