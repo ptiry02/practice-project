@@ -4,7 +4,7 @@ const Input = ({ label, input }) => {
   return (
     <InputWrapper>
       <Label htmlFor={input.id}>{label}</Label>
-      <TheInput id={input.id} {...input} />
+      <TheInput {...input} />
     </InputWrapper>
   )
 }
