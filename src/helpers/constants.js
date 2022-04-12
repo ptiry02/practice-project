@@ -33,3 +33,5 @@ export const DUMMY_CART_ITEMS = [
     price: 12.99,
   },
 ]
+
+export const portalElement = document.getElementById('overlays')

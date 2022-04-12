@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import Modal from '../UI/Modal'
 import { DUMMY_CART_ITEMS } from '../../helpers/constants'
 
 const Cart = () => {
   return (
-    <div>
+    <Modal>
       <CartItems>
         {DUMMY_CART_ITEMS.map((item) => (
           <li>{item.name}</li>
@@ -15,9 +16,9 @@ const Cart = () => {
       </Total>
       <Actions>
         <ButtonAlt>Close</ButtonAlt>
-        <Button>Order</Button>
+        <ButtonOrder>Order</ButtonOrder>
       </Actions>
-    </div>
+    </Modal>
   )
 }
 
@@ -39,6 +40,15 @@ const Total = styled.div`
   margin: 1rem 0;
 `
 
+const ButtonAlt = styled.button`
+  color: #8a2b06;
+`
+
+const ButtonOrder = styled.button`
+  background-color: #8a2b06;
+  color: white;
+`
+
 const Actions = styled.div`
   text-align: right;
   button {
@@ -56,13 +66,4 @@ const Actions = styled.div`
     border-color: #5a1a01;
     color: white;
   }
-`
-
-const ButtonAlt = styled.button`
-  color: #8a2b06;
-`
-
-const Button = styled.button`
-  background-color: #8a2b06;
-  color: white;
 `
