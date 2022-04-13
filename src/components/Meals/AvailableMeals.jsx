@@ -1,8 +1,7 @@
 import { DUMMY_MEALS } from '../../helpers/constants'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Card from '../UI/Card'
 import MealItem from './MealItem/MealItem'
-import '../../assets/animations/animations.module.css'
 
 const AvailableMeals = () => {
   return (
@@ -26,11 +25,23 @@ const AvailableMeals = () => {
 
 export default AvailableMeals
 
+const mealsAppear = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
 const Meals = styled.section`
   max-width: 60rem;
   width: 90%;
   margin: 2rem auto;
-  animation: meals-appear 1s ease-out forwards;
+  animation: ${mealsAppear} 1s ease-out forwards;
   ul {
     list-style: none;
     margin: 0;

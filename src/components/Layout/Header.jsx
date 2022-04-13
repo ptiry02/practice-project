@@ -2,12 +2,12 @@ import styled from 'styled-components'
 import headerImg from '../../assets/meals.jpg'
 import HeaderCartButton from './HeaderCartButton'
 
-const Header = () => {
+const Header = ({ handleCart }) => {
   return (
     <>
       <Hdr>
         <h1>Order your meals</h1>
-        <HeaderCartButton>Cart</HeaderCartButton>
+        <HeaderCartButton onClick={handleCart} />
       </Hdr>
       <MainImage>
         <img src={headerImg} alt="A table full of food" />

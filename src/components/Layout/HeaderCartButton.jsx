@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 import CartIcon from '../Cart/CartIcon'
 
-const HeaderCartButton = (props) => {
+const HeaderCartButton = ({ onClick }) => {
   return (
-    <Btn>
+    <Btn onClick={onClick}>
       <Icon>
         <CartIcon />
       </Icon>
-      <span>shopping cart</span>
+      <span>Shopping cart</span>
       <Badge className="badge">3</Badge>
     </Btn>
   )
@@ -15,7 +15,7 @@ const HeaderCartButton = (props) => {
 
 export default HeaderCartButton
 
-const Btn = styled.span`
+const Btn = styled.button`
   cursor: pointer;
   font: inherit;
   border: none;
@@ -27,12 +27,12 @@ const Btn = styled.span`
   align-items: center;
   border-radius: 25px;
   font-weight: bold;
-  :hover,
-  :active {
+  &:hover,
+  &:active {
     background-color: #2c0d00;
   }
-  :hover .badge,
-  :active .badge {
+  &:hover .badge,
+  &:active .badge {
     background-color: #92320c;
   }
 `

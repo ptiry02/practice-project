@@ -2,9 +2,9 @@ import styled from 'styled-components'
 import Modal from '../UI/Modal'
 import { DUMMY_CART_ITEMS } from '../../helpers/constants'
 
-const Cart = () => {
+const Cart = ({ onClose }) => {
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <CartItems>
         {DUMMY_CART_ITEMS.map((item) => (
           <li>{item.name}</li>
@@ -15,8 +15,8 @@ const Cart = () => {
         <span>35.62€</span>
       </Total>
       <Actions>
-        <ButtonAlt>Close</ButtonAlt>
-        <ButtonOrder>Order</ButtonOrder>
+        <ButtonAlt onClick={onClose}>Close</ButtonAlt>
+        <ButtonOrder onClick={onClose}>Order</ButtonOrder>
       </Actions>
     </Modal>
   )
@@ -41,6 +41,7 @@ const Total = styled.div`
 `
 
 const ButtonAlt = styled.button`
+  background-color: transparent;
   color: #8a2b06;
 `
 
@@ -54,7 +55,6 @@ const Actions = styled.div`
   button {
     font: inherit;
     cursor: pointer;
-    background-color: transparent;
     border: 1px solid #8a2b06;
     padding: 0.5rem 2rem;
     border-radius: 25px;
