@@ -11,7 +11,9 @@ const CartProvider = ({ children }) => {
     addItem: addItemHandler,
     removeItem: removeItemHandler,
   }
-  return <CartContext.Provider>{children}</CartContext.Provider>
+  return (
+    <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
+  )
 }
 
 export default CartProvider
