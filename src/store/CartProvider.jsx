@@ -12,7 +12,9 @@ const CartProvider = ({ children }) => {
     dispatchCartAction({ type: 'ADD_ITEM', item: item })
   }
 
-  const removeItemHandler = (id) => {}
+  const removeItemHandler = (id) => {
+    dispatchCartAction({ type: 'REMOVE_ITEM', id: id })
+  }
 
   const cartContext = {
     items: cartState.items,

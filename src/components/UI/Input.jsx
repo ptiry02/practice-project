@@ -1,20 +1,21 @@
+import { forwardRef } from 'react'
 import styled from 'styled-components'
 
-const Input = ({ label, input }) => {
+const Input = forwardRef(({ label, input }, ref) => {
   return (
     <InputWrapper>
       <Label htmlFor={input.id}>{label}</Label>
-      <TheInput {...input} />
+      <TheInput ref={ref} {...input} />
     </InputWrapper>
   )
-}
+})
 
 export default Input
 
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
+  justify-content: end;
 `
 
 const Label = styled.label`

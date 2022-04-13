@@ -1,26 +1,37 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
+import CartContext from '../../../store/cart-context'
 import MealItemForm from './MealItemForm'
 
 const MealItem = ({ title, description, price, id }) => {
+  const cartCtx = useContext(CartContext)
+
   const priceAmount = `${price.toFixed(2)}€`
 
+  const addToCartHandler = (amount) => {
+    cartCtx.addItem({
+      id: id,
+      name: title,
+      amount: amount,
+      price: price,
+    })
+  }
+
   return (
-    <Meal>
-      <div>
+    <MealWrapper>
+      <Meal>
         <h3>{title}</h3>
         <Description>{description}</Description>
         <Price>{priceAmount}</Price>
-      </div>
-      <div>
-        <MealItemForm id={id} />
-      </div>
-    </Meal>
+      </Meal>
+      <MealItemForm id={id} onAddToCart={addToCartHandler} />
+    </MealWrapper>
   )
 }
 
 export default MealItem
 
-const Meal = styled.li`
+const MealWrapper = styled.li`
   display: flex;
   justify-content: space-between;
   margin: 1rem;
@@ -29,6 +40,12 @@ const Meal = styled.li`
   h3 {
     margin: 0 0 0.25rem 0;
   }
+`
+
+const Meal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
 const Description = styled.div`

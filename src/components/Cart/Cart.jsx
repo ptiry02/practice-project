@@ -7,7 +7,7 @@ const Cart = ({ onClose }) => {
     <Modal onClose={onClose}>
       <CartItems>
         {DUMMY_CART_ITEMS.map((item) => (
-          <li>{item.name}</li>
+          <li key={item.id}>{item.name}</li>
         ))}
       </CartItems>
       <Total>
