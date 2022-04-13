@@ -1,7 +1,6 @@
 import Header from './components/Layout/Header'
 import Meals from './components/Meals/Meals'
 import Cart from './components/Cart/Cart'
-import './assets/animations/animations.module.css'
 import { useState } from 'react'
 
 const App = () => {
