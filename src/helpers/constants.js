@@ -35,3 +35,21 @@ export const DUMMY_CART_ITEMS = [
 ]
 
 export const portalElement = document.getElementById('overlays')
+
+export const defaultCartState = {
+  items: [],
+  totalAmount: 0,
+}
+
+export const cartReducer = (state, action) => {
+  if (action.type === 'ADD_ITEM') {
+    const updatedItems = state.items.concat(action.item)
+    const updatedTotalAmount =
+      state.totalAmount + action.item.price * action.item.amount
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
+    }
+  }
+  return defaultCartState
+}
