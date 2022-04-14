@@ -1,18 +1,14 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { createPortal } from 'react-dom'
 import { portalElement } from '../../helpers/constants'
 
-const Backdrop = ({ onClose }) => <BackDrop onClick={onClose} />
+const Backdrop = () => <BackDrop />
 
-const ModalOverlay = ({ children }) => (
-  <ModalWrapper className="modal">
-    <div>{children}</div>
-  </ModalWrapper>
-)
+const ModalOverlay = ({ children }) => <ModalWrapper>{children}</ModalWrapper>
 
-const Modal = ({ children, onClose }) => (
+const Modal = ({ children }) => (
   <>
-    {createPortal(<Backdrop onClose={onClose} />, portalElement)}
+    {createPortal(<Backdrop />, portalElement)}
     {createPortal(<ModalOverlay>{children}</ModalOverlay>, portalElement)}
   </>
 )
@@ -28,26 +24,16 @@ const BackDrop = styled.div`
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.75);
 `
-const slidedown = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-3rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
 
 const ModalWrapper = styled.div`
   position: fixed;
   top: 20vh;
-  left: 35%;
-  width: 30%;
+  left: 25%;
+  width: 50%;
   background-color: white;
   padding: 1rem;
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
-  animation: ${slidedown} 300ms ease-out forwards;
+  animation: slide-down 300ms ease-out forwards;
 `

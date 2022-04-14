@@ -1,22 +1,39 @@
+import { useContext } from 'react'
+import CartContext from '../../store/cart-context'
 import styled from 'styled-components'
 import Modal from '../UI/Modal'
-import { DUMMY_CART_ITEMS } from '../../helpers/constants'
+import CartItem from './CartItem'
 
 const Cart = ({ onClose }) => {
+  const cartCtx = useContext(CartContext)
+
+  const totalAmount = `${cartCtx.totalAmount.toFixed(2)}€`
+  const hasItems = cartCtx.items.length > 0
+
+  const addHandler = (id) => {}
+  const removeHandler = (item) => {}
+
   return (
     <Modal onClose={onClose}>
       <CartItems>
-        {DUMMY_CART_ITEMS.map((item) => (
-          <li key={item.id}>{item.name}</li>
+        {cartCtx.items.map((item) => (
+          <CartItem
+            key={item.id}
+            name={item.name}
+            amount={item.amount}
+            price={item.price}
+            onRemove={() => addHandler(item.id)}
+            onAdd={() => removeHandler(item)}
+          />
         ))}
       </CartItems>
       <Total>
         <span>Total Amount</span>
-        <span>35.62€</span>
+        <span>{totalAmount}</span>
       </Total>
       <Actions>
         <ButtonAlt onClick={onClose}>Close</ButtonAlt>
-        <ButtonOrder onClick={onClose}>Order</ButtonOrder>
+        {hasItems && <ButtonOrder onClick={onClose}>Order</ButtonOrder>}
       </Actions>
     </Modal>
   )
