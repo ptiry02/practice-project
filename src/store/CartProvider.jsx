@@ -12,8 +12,8 @@ const CartProvider = ({ children }) => {
     dispatchCartAction({ type: 'ADD_ITEM', item: item })
   }
 
-  const removeItemHandler = (id) => {
-    dispatchCartAction({ type: 'REMOVE_ITEM', id: id })
+  const removeItemHandler = (item) => {
+    dispatchCartAction({ type: 'REMOVE_ITEM', item: item })
   }
 
   const cartContext = {

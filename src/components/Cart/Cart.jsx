@@ -10,8 +10,12 @@ const Cart = ({ onClose }) => {
   const totalAmount = `${cartCtx.totalAmount.toFixed(2)}€`
   const hasItems = cartCtx.items.length > 0
 
-  const addHandler = (id) => {}
-  const removeHandler = (item) => {}
+  const addHandler = (item) => {
+    cartCtx.addItem({ ...item, amount: 1 })
+  }
+  const removeHandler = (item) => {
+    cartCtx.removeItem(item)
+  }
 
   return (
     <Modal onClose={onClose}>
@@ -22,8 +26,8 @@ const Cart = ({ onClose }) => {
             name={item.name}
             amount={item.amount}
             price={item.price}
-            onRemove={() => addHandler(item.id)}
-            onAdd={() => removeHandler(item)}
+            onAdd={() => addHandler(item)}
+            onRemove={() => removeHandler(item)}
           />
         ))}
       </CartItems>
