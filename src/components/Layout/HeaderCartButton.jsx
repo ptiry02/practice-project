@@ -1,17 +1,32 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import CartContext from '../../store/cart-context'
-import styled from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import CartIcon from '../Cart/CartIcon'
 
 const HeaderCartButton = ({ onClick }) => {
+  const [animate, setAnimate] = useState(false)
   const cartCtx = useContext(CartContext)
+  const { items } = cartCtx
 
-  const numberOfItems = cartCtx.items.reduce((amount, item) => {
+  const numberOfItems = items.reduce((amount, item) => {
     return amount + item.amount
   }, 0)
 
+  useEffect(() => {
+    if (items.length !== 0) {
+      setAnimate(true)
+    }
+    const timer = setTimeout(() => {
+      setAnimate(false)
+    }, 300)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [items])
+
   return (
-    <Btn onClick={onClick}>
+    <Btn onClick={onClick} animate={animate}>
       <Icon>
         <CartIcon />
       </Icon>
@@ -22,6 +37,28 @@ const HeaderCartButton = ({ onClick }) => {
 }
 
 export default HeaderCartButton
+
+const bump = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.9);
+  }
+  30% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+`
+
+const animation = ({ animate }) => css`
+  animation: ${animate ? bump : 'none'} 300ms ease-out;
+`
 
 const Btn = styled.button`
   cursor: pointer;
@@ -35,6 +72,7 @@ const Btn = styled.button`
   align-items: center;
   border-radius: 25px;
   font-weight: bold;
+  ${animation}
   &:hover,
   &:active {
     background-color: #2c0d00;
