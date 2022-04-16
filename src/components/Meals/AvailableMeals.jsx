@@ -1,14 +1,15 @@
-import { DUMMY_MEALS } from '../../helpers/constants'
 import styled, { keyframes } from 'styled-components'
 import Card from '../UI/Card'
 import MealItem from './MealItem/MealItem'
+import useMeals from '../../hooks/useMeals'
 
 const AvailableMeals = () => {
+  const meals = useMeals()
   return (
     <Meals>
       <Card>
         <ul>
-          {DUMMY_MEALS.map((meal) => (
+          {meals.map((meal) => (
             <MealItem
               id={meal.id}
               key={meal.id}
