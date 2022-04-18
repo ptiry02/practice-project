@@ -4,27 +4,48 @@ import MealItem from './MealItem/MealItem'
 import useMeals from '../../hooks/useMeals'
 
 const AvailableMeals = () => {
-  const meals = useMeals()
+  const { meals, isLoading, error } = useMeals()
+  if (isLoading) {
+    return (
+      <Loading>
+        <p>Loading...</p>
+      </Loading>
+    )
+  }
   return (
     <Meals>
       <Card>
-        <ul>
-          {meals.map((meal) => (
-            <MealItem
-              id={meal.id}
-              key={meal.id}
-              title={meal.name}
-              description={meal.description}
-              price={meal.price}
-            />
-          ))}
-        </ul>
+        {meals && (
+          <ul>
+            {meals.map((meal) => (
+              <MealItem
+                id={meal.id}
+                key={meal.id}
+                title={meal.name}
+                description={meal.description}
+                price={meal.price}
+              />
+            ))}
+          </ul>
+        )}
+        {error && (
+          <ErrorMessage>
+            <p>{error.message}</p>
+            <p>Something went wrong...</p>
+          </ErrorMessage>
+        )}
       </Card>
     </Meals>
   )
 }
 
 export default AvailableMeals
+
+const Loading = styled.section`
+  text-align: center;
+  font-weight: bold;
+  color: white;
+`
 
 const mealsAppear = keyframes`
   from {
@@ -48,4 +69,12 @@ const Meals = styled.section`
     margin: 0;
     padding: 0;
   }
+`
+
+const ErrorMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: red;
+  font-size: x-large;
 `

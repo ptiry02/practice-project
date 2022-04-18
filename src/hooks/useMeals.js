@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react'
 
 const useMeals = () => {
-  const [meals, setMeals] = useState([])
+  const [meals, setMeals] = useState()
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState()
   useEffect(() => {
     const availableMeals = async () => {
       const result = await fetch(
         'https://practice-database-14ea7-default-rtdb.europe-west1.firebasedatabase.app/meals.json/'
       )
+      if (!result.ok) {
+        throw new Error()
+      }
       const dummyMeals = await result.json()
       const mealslist = []
       for (const meal in dummyMeals) {
@@ -18,10 +23,19 @@ const useMeals = () => {
         })
       }
       setMeals(mealslist)
+      setIsLoading(false)
     }
-    availableMeals()
+    const fetchHandler = async () => {
+      try {
+        await availableMeals()
+      } catch (err) {
+        setIsLoading(false)
+        setError({ ...err, message: 'Ups...' })
+      }
+    }
+    fetchHandler()
   }, [])
-  return meals
+  return { meals, isLoading, error }
 }
 
 export default useMeals
