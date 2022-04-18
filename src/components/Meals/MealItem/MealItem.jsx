@@ -9,12 +9,15 @@ const MealItem = ({ title, description, price, id }) => {
   const priceAmount = `${price.toFixed(2)}€`
 
   const addToCartHandler = (amount) => {
-    cartCtx.addItem({
-      id: id,
-      name: title,
-      amount: amount,
-      price: price,
-    })
+    cartCtx.updateCart(
+      {
+        id: id,
+        name: title,
+        amount: amount,
+        price: price,
+      },
+      'ADD_ITEM'
+    )
   }
 
   return (

@@ -8,19 +8,14 @@ const CartProvider = ({ children }) => {
     defaultCartState
   )
 
-  const addItemHandler = (item) => {
-    dispatchCartAction({ type: 'ADD_ITEM', item: item })
-  }
-
-  const removeItemHandler = (item) => {
-    dispatchCartAction({ type: 'REMOVE_ITEM', item: item })
+  const updateCartHandler = (item, type) => {
+    dispatchCartAction({ type: type, item: item })
   }
 
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
-    addItem: addItemHandler,
-    removeItem: removeItemHandler,
+    updateCart: updateCartHandler,
   }
   return (
     <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>

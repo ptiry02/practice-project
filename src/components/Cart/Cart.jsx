@@ -10,11 +10,8 @@ const Cart = ({ onClose }) => {
   const totalAmount = `${cartCtx.totalAmount.toFixed(2)}€`
   const hasItems = cartCtx.items.length > 0
 
-  const addHandler = (item) => {
-    cartCtx.addItem({ ...item, amount: 1 })
-  }
-  const removeHandler = (item) => {
-    cartCtx.removeItem(item)
+  const cartHandler = (item, type) => {
+    cartCtx.updateCart(item, type)
   }
 
   return (
@@ -26,8 +23,8 @@ const Cart = ({ onClose }) => {
             name={item.name}
             amount={item.amount}
             price={item.price}
-            onAdd={() => addHandler(item)}
-            onRemove={() => removeHandler(item)}
+            onAdd={() => cartHandler({ ...item, amount: 1 }, 'ADD_ITEM')}
+            onRemove={() => cartHandler(item, 'REMOVE_ITEM')}
           />
         ))}
       </CartItems>
