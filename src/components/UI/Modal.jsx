@@ -38,7 +38,7 @@ const slideDown = keyframes`
 
 const ModalWrapper = styled.div`
   position: fixed;
-  top: 20vh;
+  top: 10vh;
   left: 25%;
   width: 50%;
   background-color: white;

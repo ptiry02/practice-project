@@ -1,10 +1,12 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import CartContext from '../../store/cart-context'
 import styled from 'styled-components'
 import Modal from '../UI/Modal'
 import CartItem from './CartItem'
+import Checkout from './Checkout'
 
 const Cart = ({ onClose }) => {
+  const [onCheckout, setOnCheckout] = useState(false)
   const cartCtx = useContext(CartContext)
 
   const totalAmount = `${cartCtx.totalAmount.toFixed(2)}€`
@@ -12,6 +14,19 @@ const Cart = ({ onClose }) => {
 
   const cartHandler = (item, type) => {
     cartCtx.updateCart(item, type)
+  }
+
+  const submitOrderHandler = async (userInfo) => {
+    fetch(
+      'https://practice-database-14ea7-default-rtdb.europe-west1.firebasedatabase.app/meals.json',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          user: userInfo,
+          order: cartCtx.items,
+        }),
+      }
+    )
   }
 
   return (
@@ -32,10 +47,18 @@ const Cart = ({ onClose }) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </Total>
-      <Actions>
-        <ButtonAlt onClick={onClose}>Close</ButtonAlt>
-        {hasItems && <ButtonOrder onClick={onClose}>Order</ButtonOrder>}
-      </Actions>
+      {onCheckout ? (
+        <Checkout onConfirm={submitOrderHandler} onCancel={onClose} />
+      ) : (
+        <Actions>
+          <ButtonAlt onClick={onClose}>Close</ButtonAlt>
+          {hasItems && (
+            <ButtonOrder onClick={() => setOnCheckout(!onCheckout)}>
+              Order
+            </ButtonOrder>
+          )}
+        </Actions>
+      )}
     </Modal>
   )
 }
