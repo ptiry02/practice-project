@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { get, child } from 'firebase/database'
+import mealsRef from '../firebase/firebaseConfig'
 
 const useMeals = () => {
   const [meals, setMeals] = useState()
@@ -6,28 +8,26 @@ const useMeals = () => {
   const [error, setError] = useState()
   useEffect(() => {
     const availableMeals = async () => {
-      const result = await fetch(
-        'https://practice-database-14ea7-default-rtdb.europe-west1.firebasedatabase.app/meals.json/'
-      )
-      if (!result.ok) {
+      const result = await get(child(mealsRef, 'meals'))
+      if (!result.exists()) {
         throw new Error()
       }
-      const dummyMeals = await result.json()
+      const avMeals = result.val()
       const mealslist = []
-      for (const meal in dummyMeals) {
+      for (const meal in result.val()) {
         mealslist.push({
           id: meal,
-          name: dummyMeals[meal].name,
-          description: dummyMeals[meal].description,
-          price: dummyMeals[meal].price,
+          name: avMeals[meal].name,
+          description: avMeals[meal].description,
+          price: avMeals[meal].price,
         })
       }
       setMeals(mealslist)
       setIsLoading(false)
     }
-    const fetchHandler = async () => {
+    const fetchHandler = () => {
       try {
-        await availableMeals()
+        availableMeals()
       } catch (err) {
         setIsLoading(false)
         setError({ ...err, message: 'Ups...' })

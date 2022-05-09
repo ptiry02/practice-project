@@ -37,7 +37,7 @@ const Checkout = ({ onCancel, onConfirm }) => {
       </Control>
       <Actions>
         <ButtonAlt onClick={onCancel}>Close</ButtonAlt>
-        <ButtonOrder>Confirm</ButtonOrder>
+        <ButtonOrder type="submit">Confirm</ButtonOrder>
       </Actions>
     </Form>
   )
