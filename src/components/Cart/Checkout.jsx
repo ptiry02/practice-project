@@ -21,15 +21,24 @@ const Checkout = ({ onCancel }) => {
     },
   })
 
-  const myHandler = (data) => {
-    set(ref(mealsDB, 'orders/' + data.name), {
-      directions: { street: data.street, postal: data.postal, city: data.city },
-      order: cartCtx.items,
-      price: cartCtx.totalAmount.toFixed(2),
-    })
-    cartCtx.updateCart(() => {})
-    setConfirmed(true)
+  const fetchHandler = async (data) => {
+    try {
+      await set(ref(mealsDB, 'orders/' + data.name), {
+        directions: {
+          street: data.street,
+          postal: data.postal,
+          city: data.city,
+        },
+        order: cartCtx.items,
+        price: cartCtx.totalAmount.toFixed(2),
+      })
+      cartCtx.updateCart(() => {})
+      setConfirmed(true)
+    } catch (error) {
+      console.log(error)
+    }
   }
+
   const reset = () => {
     onCancel()
     setConfirmed(false)
@@ -45,7 +54,7 @@ const Checkout = ({ onCancel }) => {
           </Actions>
         </>
       ) : (
-        <Form onSubmit={handleSubmit(myHandler)}>
+        <Form onSubmit={handleSubmit(fetchHandler)}>
           <Control>
             <label htmlFor="name">Your Name</label>
             <section>
