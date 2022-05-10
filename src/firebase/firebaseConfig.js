@@ -12,6 +12,5 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-const mealsDB = getDatabase(app)
-const mealsRef = ref(mealsDB)
-export default mealsRef
+export const mealsDB = getDatabase(app)
+export const mealsRef = ref(mealsDB)

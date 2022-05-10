@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { get, child } from 'firebase/database'
-import mealsRef from '../firebase/firebaseConfig'
+import { mealsRef } from '../firebase/firebaseConfig'
 
 const useMeals = () => {
   const [meals, setMeals] = useState()

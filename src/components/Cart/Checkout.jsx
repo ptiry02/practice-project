@@ -1,45 +1,108 @@
-import { useRef } from 'react'
 import styled from 'styled-components'
+import { useForm } from 'react-hook-form'
+import { mealsDB } from '../../firebase/firebaseConfig'
+import { ref, set } from 'firebase/database'
+import { useContext, useState } from 'react'
+import CartContext from '../../store/cart-context'
 
-const Checkout = ({ onCancel, onConfirm }) => {
-  const nameInputRef = useRef()
-  const streetInputRef = useRef()
-  const postalCodeInputRef = useRef()
-  const cityInputRef = useRef()
+const Checkout = ({ onCancel }) => {
+  const [confirmed, setConfirmed] = useState(false)
+  const cartCtx = useContext(CartContext)
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      street: '',
+      postal: '',
+      city: '',
+    },
+  })
 
-  const confirmHandler = (event) => {
-    event.preventDefault()
-
-    onConfirm({
-      name: nameInputRef.current.value,
-      street: streetInputRef.current.value,
-      city: postalCodeInputRef.current.value,
-      postalCode: cityInputRef.current.value,
+  const myHandler = (data) => {
+    set(ref(mealsDB, 'orders/' + data.name), {
+      directions: { street: data.street, postal: data.postal, city: data.city },
+      order: cartCtx.items,
+      price: cartCtx.totalAmount.toFixed(2),
     })
+    cartCtx.updateCart(() => {})
+    setConfirmed(true)
   }
+  const reset = () => {
+    onCancel()
+    setConfirmed(false)
+  }
+
   return (
-    <Form onSubmit={confirmHandler}>
-      <Control>
-        <label htmlFor="name">Your Name</label>
-        <input type="text" id="name" ref={nameInputRef} />
-      </Control>
-      <Control>
-        <label htmlFor="street">Street</label>
-        <input type="text" id="street" ref={streetInputRef} />
-      </Control>
-      <Control>
-        <label htmlFor="postal">Postal Code</label>
-        <input type="text" id="postal" ref={postalCodeInputRef} />
-      </Control>
-      <Control>
-        <label htmlFor="city">City</label>
-        <input type="text" id="city" ref={cityInputRef} />
-      </Control>
-      <Actions>
-        <ButtonAlt onClick={onCancel}>Close</ButtonAlt>
-        <ButtonOrder type="submit">Confirm</ButtonOrder>
-      </Actions>
-    </Form>
+    <>
+      {confirmed ? (
+        <>
+          <Thx>Thank you for your order</Thx>
+          <Actions>
+            <ButtonAlt onClick={reset}>Close</ButtonAlt>
+          </Actions>
+        </>
+      ) : (
+        <Form onSubmit={handleSubmit(myHandler)}>
+          <Control>
+            <label htmlFor="name">Your Name</label>
+            <section>
+              <input
+                type="text"
+                id="name"
+                {...register('name', { required: 'Please enter your name.' })}
+              />
+              <ErrorMessage>{errors.name?.message}</ErrorMessage>
+            </section>
+          </Control>
+          <Control>
+            <label htmlFor="street">Street</label>
+            <section>
+              <input
+                type="text"
+                id="street"
+                {...register('street', {
+                  required: 'Please give us an adress.',
+                })}
+              />
+              <ErrorMessage>{errors.street?.message}</ErrorMessage>
+            </section>
+          </Control>
+          <Control>
+            <label htmlFor="postal">Postal Code</label>
+            <section>
+              <input
+                type="text"
+                id="postal"
+                {...register('postal', {
+                  required: 'A postal code is required.',
+                })}
+              />
+              <ErrorMessage>{errors.postal?.message}</ErrorMessage>
+            </section>
+          </Control>
+          <Control>
+            <label htmlFor="city">City</label>
+            <section>
+              <input
+                type="text"
+                id="city"
+                {...register('city', {
+                  required: 'We need a city to complete the adress.',
+                })}
+              />
+              <ErrorMessage>{errors.city?.message}</ErrorMessage>
+            </section>
+          </Control>
+          <Actions>
+            <ButtonAlt onClick={onCancel}>Cancel</ButtonAlt>
+            <ButtonOrder type="submit">Confirm</ButtonOrder>
+          </Actions>
+        </Form>
+      )}
+    </>
   )
 }
 
@@ -63,6 +126,12 @@ const Control = styled.div`
     border-radius: 4px;
     width: 20rem;
     max-width: 100%;
+  }
+  section {
+    display: flex;
+    height: 1.8rem;
+    align-items: center;
+    column-gap: 0.5rem;
   }
 `
 const ButtonAlt = styled.button`
@@ -91,4 +160,12 @@ const Actions = styled.div`
     border-color: #5a1a01;
     color: white;
   }
+`
+
+const ErrorMessage = styled.p`
+  font-size: 0.8rem;
+  color: red;
+`
+const Thx = styled.h2`
+  text-align: center;
 `

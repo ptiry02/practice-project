@@ -16,17 +16,9 @@ const Cart = ({ onClose }) => {
     cartCtx.updateCart(item, type)
   }
 
-  const submitOrderHandler = async (userInfo) => {
-    fetch(
-      'https://practice-database-14ea7-default-rtdb.europe-west1.firebasedatabase.app/meals.json',
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          user: userInfo,
-          order: cartCtx.items,
-        }),
-      }
-    )
+  const closeHandler = () => {
+    setOnCheckout(false)
+    onClose()
   }
 
   return (
@@ -48,14 +40,12 @@ const Cart = ({ onClose }) => {
         <span>{totalAmount}</span>
       </Total>
       {onCheckout ? (
-        <Checkout onConfirm={submitOrderHandler} onCancel={onClose} />
+        <Checkout onCancel={closeHandler} />
       ) : (
         <Actions>
           <ButtonAlt onClick={onClose}>Close</ButtonAlt>
           {hasItems && (
-            <ButtonOrder onClick={() => setOnCheckout(!onCheckout)}>
-              Order
-            </ButtonOrder>
+            <ButtonOrder onClick={() => setOnCheckout(true)}>Order</ButtonOrder>
           )}
         </Actions>
       )}
